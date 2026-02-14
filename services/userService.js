@@ -15,7 +15,9 @@ function  login(email, password){
     if (existingUser.password !== password) {
       throw new Error("Invalid password");
     }
-   return existingUser;
+   return {
+    token: "fake-jwt-token" + existingUser.email,
+   };
 }
 module.exports = {
     register,
