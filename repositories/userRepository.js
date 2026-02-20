@@ -9,7 +9,9 @@ function findByEmail(email) {
 }
 
 function createUser(email, password) {
-  users.push({ email, password });
+  const user = { id: users.length + 1, email, password };
+  users.push(user);
+  return user;
 }
 
 module.exports = {
