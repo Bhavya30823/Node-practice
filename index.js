@@ -42,7 +42,7 @@ app.post("/create-task", authMiddleware, (req, res) => {
     const result = taskService.createTask(title, userEmail.email, status);
     res.status(200).json({ message: "Task created successfully", task: result });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 app.get("/get-tasks", authMiddleware, (req, res) => {
@@ -51,7 +51,7 @@ app.get("/get-tasks", authMiddleware, (req, res) => {
     const result = taskService.getTasksForUser(userEmail.email);
     res.status(200).json({ message: "Tasks retrieved successfully", tasks: result });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 app.delete("/delete-task/:id", authMiddleware, (req, res) => {
@@ -61,16 +61,17 @@ app.delete("/delete-task/:id", authMiddleware, (req, res) => {
     taskService.deleteTask(taskId, userEmail.email);
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 app.put("/update-task/:id", authMiddleware, (req, res) => {
   try {
     const taskId = parseInt(req.params.id);
     const userEmail = req.user; 
+    const { status } = req.body; // object destructuring
     const result = taskService.updateTask(taskId, userEmail.email);
     res.status(200).json({ message: "Task updated successfully", task: result });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });

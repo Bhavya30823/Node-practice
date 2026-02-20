@@ -19,7 +19,7 @@ function deleteTask(taskId, userEmail) {
     taskRepository.deleteTask(taskId);
 }
 
-function updateTask(taskId, userEmail) {
+function updateTask(taskId, userEmail, status) {
     const task = taskRepository.findTaskById(taskId);
     if (!task) {
         throw new Error("Task not found");
@@ -27,7 +27,7 @@ function updateTask(taskId, userEmail) {
     if (task.userEmail !== userEmail) {
         throw new Error("Unauthorized");
     }
-    return taskRepository.updateTask(taskId, status === "pending" ? { status: "completed" } : { status: "pending" });
+    return taskRepository.updateTask(taskId, status);
 }
 module.exports = {
     createTask,
