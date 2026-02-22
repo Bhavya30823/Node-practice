@@ -4,8 +4,10 @@ function createTask(title, userEmail, status) {
     return taskRepository.createTask(title, userEmail, status);    
 }
 
-function getTasksForUser(userEmail) {
-    return taskRepository.getTasks().filter(task => task.userEmail === userEmail);
+function getTasksForUser(userEmail, limit, offset) {
+    return taskRepository.getTasks()
+        .filter(task => task.userEmail === userEmail)
+        .slice(offset, offset + limit);
 }
 
 function deleteTask(taskId, userEmail) {

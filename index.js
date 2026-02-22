@@ -4,7 +4,7 @@ const userService = require("./services/userService");
 const taskService = require("./services/taskService");
 const authMiddleware = require("./middlewares/authMiddleware");
 
-app.use(express.json());
+app.use(express.json()); 
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
@@ -13,7 +13,6 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 const users = [];
-
 app.post("/register", (req, res) => {
   try {
     const { email, password } = req.body; // object destructuring
@@ -48,7 +47,9 @@ app.post("/create-task", authMiddleware, (req, res) => {
 app.get("/get-tasks", authMiddleware, (req, res) => {
   try {
     const userEmail = req.user; 
-    const result = taskService.getTasksForUser(userEmail.email);
+    const limit = parseInt(req.query.limit) || 10; // default limit is 10
+    const offset = parseInt(req.query.offset) || 0; // default offset is 0
+    const result = taskService.getTasksForUser(userEmail.email, limit, offset);
     res.status(200).json({ message: "Tasks retrieved successfully", tasks: result });
   } catch (error) {
     res.status(400).json({ message: error.message });
