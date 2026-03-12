@@ -25,10 +25,10 @@ function deleteTask(id) {
   tasks = tasks.filter((task) => task.id !== id);
 }
 
-function updateTask(id, updatedTask) {
+function updateTask(id, updates) {
   const index = tasks.findIndex((task) => task.id === id);
   if (index !== -1) {
-    tasks[index] = { ...tasks[index], ...updatedTask };
+    tasks[index] = { ...tasks[index], ...updates };
     return tasks[index];
   }
   return null;

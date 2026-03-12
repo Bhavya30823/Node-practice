@@ -43,7 +43,9 @@ app.post("/create-task", authMiddleware, (req, res) => {
       .status(200)
       .json({ message: "Task created successfully", task: result });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || "Internal Server Error" });
   }
 });
 app.get("/get-tasks", authMiddleware, (req, res) => {
@@ -65,7 +67,9 @@ app.get("/get-tasks", authMiddleware, (req, res) => {
       .status(200)
       .json({ message: "Tasks retrieved successfully", tasks: result });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || "Internal Server Error" });
   }
 });
 app.delete("/delete-task/:id", authMiddleware, (req, res) => {
@@ -75,19 +79,26 @@ app.delete("/delete-task/:id", authMiddleware, (req, res) => {
     taskService.deleteTask(taskId, userEmail.email);
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || "Internal Server Error" });
   }
 });
 app.put("/update-task/:id", authMiddleware, (req, res) => {
   try {
     const taskId = parseInt(req.params.id);
     const userEmail = req.user;
-    const { status } = req.body; // object destructuring
-    const result = taskService.updateTask(taskId, userEmail.email, status);
+    const updates = {
+      status: req.body.status,
+      title: req.body.title,
+    }; // object destructuring
+    const result = taskService.updateTask(taskId, userEmail.email, updates);
     res
       .status(200)
       .json({ message: "Task updated successfully", task: result });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || "Internal Server Error" });
   }
 });

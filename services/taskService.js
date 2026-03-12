@@ -1,4 +1,5 @@
 const taskRepository = require("../repositories/taskRepository");
+const AppError = require("../errors/appError");
 
 const allowedSortFields = ["userEmail", "title", "status"];
 function createTask(title, userEmail, status) {
@@ -24,23 +25,23 @@ function getTasksForUser({userEmail, limit, offset, status, search, sort, order}
 function deleteTask(taskId, userEmail) {
     const task = taskRepository.findTaskById(taskId);
     if (!task) {
-        throw new Error("Task not found");
+        throw new AppError("Task not found", 404);
     }
     if (task.userEmail !== userEmail) {
-        throw new Error("Unauthorized");
+        throw new AppError("Unauthorized", 403);
     }
     taskRepository.deleteTask(taskId);
 }
 
-function updateTask(taskId, userEmail, status) {
+function updateTask(taskId, userEmail, updates) {
     const task = taskRepository.findTaskById(taskId);
     if (!task) {
-        throw new Error("Task not found");
+        throw new AppError("Task not found", 404);
     }
     if (task.userEmail !== userEmail) {
-        throw new Error("Unauthorized");
+        throw new AppError("Unauthorized", 403);
     }
-    return taskRepository.updateTask(taskId, status);
+    return taskRepository.updateTask(taskId, updates);
 }
 module.exports = {
     createTask,
