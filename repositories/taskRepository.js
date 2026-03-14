@@ -1,9 +1,9 @@
 let tasks = [
-  { id: 1, title: "Task 1", userEmail: "user1@test.com", status: "pending" },
-  { id: 2, title: "Task 2", userEmail: "user2@test.com", status: "completed" },
-  { id: 3, title: "Task 3", userEmail: "user1@test.com", status: "pending" },
-  { id: 4, title: "Task 4", userEmail: "user1@test.com", status: "in progress" },
-  { id: 5, title: "Task 5", userEmail: "user1@test.com", status: "completed" }
+  { id: 1, title: "Task 1", userEmail: "user1@test.com", status: "pending", priority: "high" },
+  { id: 2, title: "Task 2", userEmail: "user2@test.com", status: "completed", priority: "medium" },
+  { id: 3, title: "Task 3", userEmail: "user1@test.com", status: "pending", priority: "low" },
+  { id: 4, title: "Task 4", userEmail: "user1@test.com", status: "in progress", priority: "high" },
+  { id: 5, title: "Task 5", userEmail: "user1@test.com", status: "completed", priority: "medium" }
 ];
 
 function getTasks() {

@@ -51,7 +51,7 @@ app.post("/create-task", authMiddleware, (req, res) => {
 app.get("/get-tasks", authMiddleware, (req, res) => {
   try {
     const userEmail = req.user;
-    const { status, search, sort, order } = req.query; // object destructuring
+    const { status, search, sort, order, priority } = req.query; // object destructuring
     const limit = parseInt(req.query.limit) || 10; // default limit is 10
     const offset = parseInt(req.query.offset) || 0; // default offset is 0
     const result = taskService.getTasksForUser({
@@ -62,6 +62,7 @@ app.get("/get-tasks", authMiddleware, (req, res) => {
       search: search,
       sort: sort,
       order: order,
+      priority: priority,
     });
     res
       .status(200)
